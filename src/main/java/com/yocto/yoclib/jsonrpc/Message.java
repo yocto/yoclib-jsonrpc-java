@@ -1,6 +1,6 @@
 package com.yocto.yoclib.jsonrpc;
 
-import org.json.JSONObject;
+import org.json.*;
 
 public abstract class Message{
 
@@ -59,6 +59,40 @@ public abstract class Message{
      */
     public JSONObject toObject(){
         return this.value;
+    }
+
+    /**
+     *
+     * @param object The object
+     * @return JSON string
+     * @throws JSONRPCException An exception
+     */
+    public static String encodeJSON(Object object) throws JSONRPCException {
+        try{
+            if(object instanceof JSONObject){
+                return ((JSONObject) object).toString(0);
+            }
+            if(object instanceof JSONArray){
+                return ((JSONArray) object).toString(0);
+            }
+            return JSONObject.valueToString(object);
+        }catch(JSONException e){
+            throw new JSONRPCException("Failed to encode JSON.");
+        }
+    }
+
+    /**
+     *
+     * @param json JSON string
+     * @return The object
+     * @throws JSONRPCException An exception
+     */
+    public static Object decodeJSON(String json) throws JSONRPCException {
+        try{
+            return new JSONTokener(json).nextValue();
+        }catch(JSONException $e){
+            throw new JSONRPCException("Failed to decode JSON.");
+        }
     }
 
 }
