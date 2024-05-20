@@ -99,7 +99,7 @@ public abstract class Message {
         if (error instanceof JSONObject) {
             JSONObject errorObj = (JSONObject) error;
             if (errorObj.has("data")) {
-                return errorObj.getInt("data");
+                return errorObj.get("data");
             }
         }
         return null;
