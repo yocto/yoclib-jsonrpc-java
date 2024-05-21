@@ -198,6 +198,44 @@ public abstract class Message {
         return this.value;
     }
 
+    public static RequestMessage createRequest(Object id,String method) throws JSONRPCException{
+        return Message.createRequest(id,method,null);
+    }
+
+    /**
+     *
+     * @param id
+     * @param method
+     * @param params
+     * @return
+     * @throws JSONRPCException
+     */
+    public static RequestMessage createRequest(Object id,String method,Object params) throws JSONRPCException{
+        return Message.createRequest(id,method,params,true);
+    }
+
+    /**
+     *
+     * @param id
+     * @param method
+     * @param params
+     * @param version2
+     * @return
+     * @throws JSONRPCException
+     */
+    public static RequestMessage createRequest(Object id,String method,Object params,boolean version2) throws JSONRPCException{
+        if(version2){
+            return Message.createRequestMessageV2(id,method,params);
+        }
+        return Message.createRequestMessageV1(id,method,params!=null?((JSONArray) params):new JSONArray());
+    }
+
+    /**
+     *
+     * @param id
+     * @param method
+     * @return
+     */
     public static RequestMessage createRequestMessageV1(Object id, String method) {
         return Message.createRequestMessageV1(id, method, new JSONArray());
     }
@@ -208,8 +246,8 @@ public abstract class Message {
      * @param params
      * @return
      */
-    public static RequestMessage createRequestMessageV1(Object id, String method, JSONArray params) {
-        return new RequestMessage(new JSONObject().put("id", id).put("method", method).put("params", params));
+    public static RequestMessage createRequestMessageV1(Object id, String method, JSONArray params){
+        return new RequestMessage(new JSONObject().put("id",id!=null?id:JSONObject.NULL).put("method",method!=null?method:JSONObject.NULL).put("params", params!=null?params:JSONObject.NULL));
     }
 
     public static RequestMessage createRequestMessageV2(Object id, String method) throws JSONRPCException {
@@ -223,7 +261,7 @@ public abstract class Message {
      * @return
      */
     public static RequestMessage createRequestMessageV2(Object id, String method, Object params) throws JSONRPCException {
-        JSONObject obj = new JSONObject().put("jsonrpc", "2.0").put("id", id).put("method", method);
+        JSONObject obj = new JSONObject().put("jsonrpc", "2.0").put("id",id!=null?id:JSONObject.NULL).put("method",method!=null?method:JSONObject.NULL);
 
         if (params instanceof JSONObject || params instanceof JSONArray) {
             obj.put("params", params);
@@ -232,6 +270,42 @@ public abstract class Message {
 
         }
         return new RequestMessage(obj);
+    }
+
+    /**
+     *
+     * @param method
+     * @return
+     * @throws JSONRPCException
+     */
+    public static NotificationMessage createNotification(String method) throws JSONRPCException{
+        return Message.createNotification(method,null);
+    }
+
+    /**
+     *
+     * @param method
+     * @param params
+     * @return
+     * @throws JSONRPCException
+     */
+    public static NotificationMessage createNotification(String method,Object params) throws JSONRPCException{
+        return Message.createNotification(method,params,true);
+    }
+
+    /**
+     *
+     * @param method
+     * @param params
+     * @param version2
+     * @return
+     * @throws JSONRPCException
+     */
+    public static NotificationMessage createNotification(String method,Object params,boolean version2) throws JSONRPCException{
+        if(version2){
+            return Message.createNotificationMessageV2(method,params);
+        }
+        return Message.createNotificationMessageV1(method,params!=null?((JSONArray) params):new JSONArray());
     }
 
     /**
@@ -248,7 +322,7 @@ public abstract class Message {
      * @return
      */
     public static NotificationMessage createNotificationMessageV1(String method, JSONArray params) {
-        return new NotificationMessage(new JSONObject().put("id", JSONObject.NULL).put("method", method).put("params", params));
+        return new NotificationMessage(new JSONObject().put("id",JSONObject.NULL).put("method",method!=null?method:JSONObject.NULL).put("params", params!=null?params:JSONObject.NULL));
     }
 
     /**
@@ -265,7 +339,7 @@ public abstract class Message {
      * @return
      */
     public static NotificationMessage createNotificationMessageV2(String method, Object params) throws JSONRPCException {
-        JSONObject obj = new JSONObject().put("jsonrpc", "2.0").put("method", method);
+        JSONObject obj = new JSONObject().put("jsonrpc", "2.0").put("method", method!=null?method:JSONObject.NULL);
 
         if (params instanceof JSONObject || params instanceof JSONArray) {
             obj.put("params", params);
@@ -274,6 +348,38 @@ public abstract class Message {
         }
 
         return new NotificationMessage(obj);
+    }
+
+    public static ResponseMessage createResponse(Object id,Object result) throws JSONRPCException{
+        return Message.createResponse(id,result,null);
+    }
+
+    /**
+     *
+     * @param id
+     * @param result
+     * @param error
+     * @return
+     * @throws JSONRPCException
+     */
+    public static ResponseMessage createResponse(Object id,Object result,Object error) throws JSONRPCException{
+        return Message.createResponse(id,result,error,true);
+    }
+
+    /**
+     *
+     * @param id
+     * @param result
+     * @param error
+     * @param version2
+     * @return
+     * @throws JSONRPCException
+     */
+    public static ResponseMessage createResponse(Object id,Object result,Object error,boolean version2) throws JSONRPCException{
+        if(version2){
+            return Message.createResponseMessageV2(id,result,(JSONObject) error);
+        }
+        return Message.createResponseMessageV1(id,result,error);
     }
 
     /**
@@ -306,7 +412,7 @@ public abstract class Message {
         if (!(error instanceof JSONObject) && !(error instanceof String) && error != null) {
             throw new JSONRPCException("[V1] The \"error\" property in request MUST be an string, object or null.");
         }
-        return new ResponseMessage(new JSONObject().put("id", id).put("result", result).put("error", error));
+        return new ResponseMessage(new JSONObject().put("id", id!=null?id:JSONObject.NULL).put("result", result!=null?result:JSONObject.NULL).put("error", error!=null?error:JSONObject.NULL));
     }
 
     /**
@@ -336,7 +442,7 @@ public abstract class Message {
         if (result != null && error != null) {
             throw new JSONRPCException("[V2] Only one property \"result\" or \"error\" can be non null.");
         }
-        JSONObject obj = new JSONObject().put("jsonrpc", "2.0").put("id", id);
+        JSONObject obj = new JSONObject().put("jsonrpc", "2.0").put("id", id!=null?id:JSONObject.NULL);
         if (error != null) {
             if (!error.has("code")) {
                 throw new JSONRPCException("[V2] The error object MUST have a \"code\" property.");
