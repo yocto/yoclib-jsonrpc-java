@@ -4,6 +4,8 @@ This yocLibrary enables your project to encode and decode JSON-RPC messages in J
 
 ## Status
 
+![Maven Central Version](https://img.shields.io/maven-central/v/com.yocto/yoclib-jsonrpc)
+![Maven Central Snapshot Version](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fcom%2Fyocto%2Fyoclib-jsonrpc%2Fmaven-metadata.xml&label=maven-central-snapshot)
 [![Java CI with Maven](https://github.com/yocto/yoclib-jsonrpc-java/actions/workflows/maven.yml/badge.svg)](https://github.com/yocto/yoclib-jsonrpc-java/actions/workflows/maven.yml)
 [![codecov](https://codecov.io/gh/yocto/yoclib-jsonrpc-java/graph/badge.svg?token=08Yu14FDIF)](https://codecov.io/gh/yocto/yoclib-jsonrpc-java)
 
