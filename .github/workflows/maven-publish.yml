@@ -36,6 +36,6 @@ jobs:
           distribution: 'temurin'
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
       - name: Publish to GitHub Packages
-        run: mvn --batch-mode deploy
+        run: mvn -P github --batch-mode deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
