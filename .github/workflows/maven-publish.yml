@@ -21,7 +21,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          server-id: ossrh
+          server-id: central
           server-username: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           server-password: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
       - name: Publish to the Maven Central Repository
