@@ -15,7 +15,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
+                <version>3.2.8</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -23,9 +23,6 @@
                         <goals>
                             <goal>sign</goal>
                         </goals>
-                        <configuration>
-                            <keyname>B684D1ECE4EA8439A7E57D79261AA214130CE7AB</keyname>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
