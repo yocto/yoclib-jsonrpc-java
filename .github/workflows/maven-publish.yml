@@ -20,6 +20,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           server-id: central
           server-username: MAVEN_USERNAME
@@ -44,6 +45,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
       - name: Publish to GitHub Packages
         run: mvn -P github --batch-mode deploy
