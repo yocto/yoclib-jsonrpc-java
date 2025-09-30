@@ -15,6 +15,7 @@ This yocLibrary enables your project to encode and decode JSON-RPC messages in J
 <dependency>
 	<groupId>com.yocto</groupId>
 	<artifactId>yoclib-jsonrpc</artifactId>
+    <version>1.0.2</version>
 </dependency>
 ```
 
